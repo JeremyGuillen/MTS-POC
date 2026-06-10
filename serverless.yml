@@ -1,0 +1,33 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: guillenjeremy26
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: mts-backend-api
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: mts-backend-api
+
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: python3.12
+  stage: ${opt:stage, 'local'}
+  environment:
+    DATABASE_URL: ${env:DATABASE_URL}
+
+plugins:
+  - serverless-offline
+
+functions:
+  listMolds:
+    handler: app/handlers/molds_handler.list_molds
+    events:
+      - httpApi:
+          path: /molds
+          method: get
+
+  createMold:
+    handler: app/handlers/molds_handler.create_mold
+    events:
+      - httpApi:
+          path: /molds
+          method: post
