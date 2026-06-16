@@ -18,16 +18,32 @@ plugins:
   - serverless-offline
 
 functions:
-  listMolds:
-    handler: app/handlers/molds_handler.list_molds
+  api:
+
+    handler: app/handler_api.router
+
     events:
+
       - httpApi:
-          path: /molds
+
+          path: /{proxy+}
+
           method: get
 
-  createMold:
-    handler: app/handlers/molds_handler.create_mold
-    events:
       - httpApi:
-          path: /molds
+
+          path: /{proxy+}
+
           method: post
+
+      - httpApi:
+
+          path: /{proxy+}
+
+          method: put
+
+      - httpApi:
+
+          path: /{proxy+}
+
+          method: delete
